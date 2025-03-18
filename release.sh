@@ -1,21 +1,27 @@
 #!/bin/bash
-# Salir inmediatamente si algún comando falla
+
+# Me detengo si cualquier comando retorna error (rc != 0)
 set -e
 
-# 1. Verificar que estamos en la rama correcta (por defecto "main")
-BRANCH_ACTUAL=$(git rev-parse --abbrev-ref HEAD)
-if [[ "$BRANCH_ACTUAL" != "main" ]]; then
-  echo "⚠️ Este script debe ejecutarse en la rama 'main'. Rama actual: $BRANCH_ACTUAL"
+# 1. Verificar que estoy en RAMA_DESEADA (la rama que quiero hacer release)
+BRANCH_ACTUAL  = "$(git rev-parse --abbrev-ref HEAD)"
+BRANCH_DESEADA = "main" # Por defecto main
+if [[ $BRANCH_ACTUAL != $BRANCH_DESEADA ]]; then
+  echo "⚠️ Este script debe ejecutarse en la rama $BRANCH_DESEADA. Rama actual: $BRANCH_ACTUAL"
   exit 1
 fi
 
-# 2. Asegurar que el repositorio está limpio
-if [[ -n $(git status --porcelain) ]]; then
-  echo "⚠️ Hay cambios sin confirmar en el repositorio. Confirma o descarta los cambios antes de continuar."
+# 2. Veo si hay cambios en el repositorio sin commitear
+# -n "String" == True si la cadena es no-vacia
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "⚠️ Hay cambios sin confirmar en el repositorio. Haz commit o descarta los cambios antes de continuar."
   exit 1
 fi
 
 # 3. Verificar que los commits cumplen con el formato de Conventional Commits
+# Se ejecuta cog check --from-latest-tag para asegurarse de que los commits 
+# desde el último tag cumplen con las reglas de Conventional Commits.
+# Si siempre se usaron convcommits entonces es innecesario.
 echo "✅ Verificando el historial de commits..."
 cog check --from-latest-tag
 
