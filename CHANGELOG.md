@@ -1,5 +1,7 @@
-## Unreleased (8b48f95..ef87e99)
+## Unreleased (8b48f95..dbfa21e)
 #### Miscellaneous Chores
+- **(cog)** update script - (dbfa21e) - Jx
+- **(cog)** update script - (50a7fd2) - Jx
 - **(cog)** update script - (ef87e99) - Jx
 - **(cog)** update changelog - (81c9971) - Jx
 - **(cog)** chmod +x release.sh - (fb57ddd) - Jx
