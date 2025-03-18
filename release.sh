@@ -31,16 +31,16 @@ else # Hay commits no convencionales
 fi
 
 # 4. Realizar el bump automático de versión con Cocogitto
-#    Esto actualizará el CHANGELOG.md, creará el commit de versión y la etiqueta.
+#    Esto actualizará el CHANGELOG.md y creara el commit de versión + el tag.
 echo "🚀 Ejecutando bump automático..."
 cog bump --auto
 
-# 5. Obtener la nueva versión generada (ya se creó el commit y el tag)
-VERSION=$(cog -v get-version)
-echo "🔖 Nueva versión detectada: $VERSION"
+# 5. Obtener la nueva versión generada (ya se crearon el commit y el tag)
+VERSION=$(cog -v get-version) # Guarda la version x.y.z despues del bump 
+echo "🔖 Version actualizada: $VERSION"
 
-# 6. Subir los cambios y las etiquetas a GitHub
-echo "📤 Subiendo cambios y etiquetas a GitHub..."
+# 6. Subir los cambios y tags a GitHub
+echo "📤 Subiendo cambios y tags a GitHub... (O al que sea)"
 git push origin main --follow-tags
 
 # 7. Crear o actualizar un release en GitHub utilizando el CHANGELOG.md generado
