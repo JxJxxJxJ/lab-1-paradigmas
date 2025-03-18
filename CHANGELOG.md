@@ -1,5 +1,7 @@
-## Unreleased (8b48f95..fb57ddd)
+## Unreleased (8b48f95..ef87e99)
 #### Miscellaneous Chores
+- **(cog)** update script - (ef87e99) - Jx
+- **(cog)** update changelog - (81c9971) - Jx
 - **(cog)** chmod +x release.sh - (fb57ddd) - Jx
 - **(cog)** Agregar script para release automaticas semver - (8b48f95) - Jx
 #### Tests
