@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Salir inmediatamente si algún comando falla
 set -e
 
@@ -20,20 +19,32 @@ fi
 echo "✅ Verificando el historial de commits..."
 cog check --from-latest-tag
 
-# 4. Realizar bump automático de versión con Cocogitto
+# 4. Generar el changelog (Cocogitto actualiza el CHANGELOG.md en el bump)
+echo "📜 Generando changelog..."
+cog changelog > CHANGELOG.md
+git add CHANGELOG.md
+
+# 5. Realizar bump automático de versión (esto crea commit y tag si corresponde)
 echo "🚀 Realizando bump de versión automáticamente..."
 cog bump --auto
 
-# 5. Obtener la nueva versión (el bump ya creó el commit y la etiqueta)
+# 6. Obtener la nueva versión (el bump ya creó el commit y la etiqueta)
 VERSION=$(cog -v get-version)
 echo "🔖 Nueva versión detectada: $VERSION"
 
-# 6. Subir cambios y etiquetas a GitHub
+# 7. Subir cambios y etiquetas a GitHub
 echo "📤 Subiendo cambios y etiquetas a GitHub..."
 git push origin main --follow-tags
 
-# 7. Crear un release en GitHub usando el CHANGELOG.md generado por Cocogitto
-echo "📦 Creando release en GitHub..."
-gh release create "v$VERSION" --title "Lanzamiento $VERSION" --notes-file CHANGELOG.md
+# 8. Crear o actualizar un release en GitHub usando el changelog
+TAG="v$VERSION"
+echo "📦 Procesando release en GitHub para el tag $TAG..."
+if gh release view "$TAG" >/dev/null 2>&1; then
+  echo "⚠️ El release $TAG ya existe, se actualizará..."
+  gh release edit "$TAG" --notes-file CHANGELOG.md --title "Lanzamiento $VERSION"
+else
+  gh release create "$TAG" --title "Lanzamiento $VERSION" --notes-file CHANGELOG.md
+fi
 
 echo "🎉 ¡Lanzamiento completado con éxito!"
+
