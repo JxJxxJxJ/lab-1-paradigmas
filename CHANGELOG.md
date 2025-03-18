@@ -12,6 +12,22 @@
 - **(cog)** Intentando hacer andar el script - (d3f5e4c) - Jx
 
 - - -
+## 0.5.0 - 2025-03-18
+#### Features
+- **(Actions)** Test - (ad64258) - Jx
+- **(GithubActions)** Intento 5 - (0716c5d) - Jx
+- **(GithubActions)** Intento 4 - (84d453b) - Jx
+- **(GithubActions)** Intento 2 - (e24ae97) - Jx
+- **(GithubActions)** Intento 1 - (faa5c1f) - Jx
+#### Miscellaneous Chores
+- **(script)** update - (56702c1) - Jx
+- **(script)** update - (21077d6) - Jx
+- **(script)** update - (aaa5a3a) - Jx
+- **(script)** update - (945bc03) - Jx
+- **(script)** rm test files - (b02b3ff) - Jx
+
+- - -
+
 ## 0.4.0 - 2025-03-18
 #### Features
 - **(release)** script para release terminado creo yo - (0ac0b37) - Jx
