@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Salir inmediatamente si un comando falla
+# Salir inmediatamente si algún comando falla
 set -e
 
-# 1. Verificar que estamos en la rama correcta (por defecto 'main')
+# 1. Verificar que estamos en la rama correcta (por defecto "main")
 BRANCH_ACTUAL=$(git rev-parse --abbrev-ref HEAD)
 if [[ "$BRANCH_ACTUAL" != "main" ]]; then
   echo "⚠️ Este script debe ejecutarse en la rama 'main'. Rama actual: $BRANCH_ACTUAL"
@@ -20,35 +20,20 @@ fi
 echo "✅ Verificando el historial de commits..."
 cog check --from-latest-tag
 
-# 4. Generar el changelog desde el último tag
-echo "📜 Generando changelog..."
-cog changelog > CHANGELOG.md
-
-# 5. Incrementar versión automáticamente según los commits
-echo "🚀 Realizando bump de versión..."
+# 4. Realizar bump automático de versión con Cocogitto
+echo "🚀 Realizando bump de versión automáticamente..."
 cog bump --auto
 
-# 6. Obtener la nueva versión
+# 5. Obtener la nueva versión (el bump ya creó el commit y la etiqueta)
 VERSION=$(cog -v get-version)
 echo "🔖 Nueva versión detectada: $VERSION"
 
-# 7. Crear un commit con el changelog actualizado
-echo "📌 Creando commit con la nueva versión..."
-git add CHANGELOG.md
-git commit -m "chore(release): versión $VERSION"
-
-# 8. Crear una etiqueta (tag) con la nueva versión
-echo "🏷️ Creando tag v$VERSION..."
-git tag "v$VERSION"
-
-# 9. Subir cambios y etiquetas a GitHub
-echo "📤 Subiendo cambios y tags a GitHub..."
-git push origin v$VERSION
+# 6. Subir cambios y etiquetas a GitHub
+echo "📤 Subiendo cambios y etiquetas a GitHub..."
 git push origin main --follow-tags
 
-# 10. Crear un release en GitHub con el changelog como descripción
+# 7. Crear un release en GitHub usando el CHANGELOG.md generado por Cocogitto
 echo "📦 Creando release en GitHub..."
 gh release create "v$VERSION" --title "Lanzamiento $VERSION" --notes-file CHANGELOG.md
 
 echo "🎉 ¡Lanzamiento completado con éxito!"
-
