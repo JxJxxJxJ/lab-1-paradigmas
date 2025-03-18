@@ -12,6 +12,13 @@
 - **(cog)** Intentando hacer andar el script - (d3f5e4c) - Jx
 
 - - -
+## 0.6.0 - 2025-03-18
+#### Features
+- **(GH)** Nos saluda - (abc9aff) - Jx
+- **(GithubActions)** Intento 6 Al menos nos dice algo - (8ac30b9) - Jx
+
+- - -
+
 ## 0.5.0 - 2025-03-18
 #### Features
 - **(Actions)** Test - (ad64258) - Jx
