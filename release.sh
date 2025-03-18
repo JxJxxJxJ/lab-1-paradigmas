@@ -23,7 +23,12 @@ fi
 # desde el último tag cumplen con las reglas de Conventional Commits.
 # Si siempre se usaron convcommits entonces es innecesario.
 echo "✅ Verificando el historial de commits..."
-cog check --from-latest-tag
+if cog check --from-latest-tag; then # == 0 on success 
+  echo "✔️ Historial de commits verificado con éxito."
+else # Hay commits no convencionales
+  echo "❌ Hay commits no convencionales."
+  exit 1
+fi
 
 # 4. Realizar el bump automático de versión con Cocogitto
 #    Esto actualizará el CHANGELOG.md, creará el commit de versión y la etiqueta.
