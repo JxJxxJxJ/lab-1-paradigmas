@@ -29,12 +29,10 @@ jobs:
         run: |
           if ! command -v cog >/dev/null 2>&1; then
             echo "Cocogitto no está instalado. Instalando..."
-            # Crear directorio para el binario si no existe
             mkdir -p $HOME/.cargo/bin
-            # Descargar y extraer el tar.gz de Cocogitto
             curl -L https://github.com/cocogitto/cocogitto/releases/download/6.2.0/cocogitto-6.2.0-x86_64-unknown-linux-musl.tar.gz -o cocogitto.tar.gz
-            tar -xzf cocogitto.tar.gz
-            # Se asume que el binario extraído se llama "cog"
+            # Extraer el contenido y eliminar la carpeta raíz del tar
+            tar -xzf cocogitto.tar.gz --strip-components=1
             chmod +x cog
             mv cog $HOME/.cargo/bin/
             echo "$HOME/.cargo/bin" >> $GITHUB_PATH
