@@ -11,12 +11,12 @@ if [[ $BRANCH_ACTUAL != $BRANCH_DESEADA ]]; then
   exit 1
 fi
 
-# # 2. Veo si hay cambios en el repositorio sin commitear
-# # -n "String" == True si la cadena es no-vacía
-# if [[ -n "$(git status --porcelain)" ]]; then
-#   echo "⚠️ Hay cambios sin confirmar en el repositorio. Haz commit o descarta los cambios antes de continuar."
-#   exit 1
-# fi
+# 2. Veo si hay cambios en el repositorio sin commitear
+# -n "String" == True si la cadena es no-vacía
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "⚠️ Hay cambios sin confirmar en el repositorio. Haz commit o descarta los cambios antes de continuar."
+  exit 1
+fi
 
 # 3. Verificar que los commits cumplen con el formato de Conventional Commits
 echo "✅ Verificando el historial de commits..."
