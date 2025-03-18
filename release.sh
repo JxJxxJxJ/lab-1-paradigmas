@@ -48,9 +48,9 @@ TAG="v$VERSION"
 echo "📦 Procesando release en GitHub para el tag $TAG..."
 if gh release view "$TAG" >/dev/null 2>&1; then
   echo "⚠️ El release $TAG ya existe, se actualizará..."
-  gh release edit "$TAG" --notes-file CHANGELOG.md --title "Lanzamiento $VERSION"
+  gh release edit "$TAG" --notes-file CHANGELOG.md --title "$VERSION"
 else
-  gh release create "$TAG" --title "Lanzamiento $VERSION" --notes-file CHANGELOG.md
+  gh release create "$TAG" --title "$VERSION" --notes-file CHANGELOG.md
 fi
 
 echo "🎉 ¡Lanzamiento completado con éxito!"
