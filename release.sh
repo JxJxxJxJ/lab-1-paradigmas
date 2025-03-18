@@ -19,11 +19,6 @@ fi
 echo "✅ Verificando el historial de commits..."
 cog check --from-latest-tag
 
-# 4. Generar el changelog
-echo "📜 Generando changelog..."
-cog changelog > CHANGELOG.md
-git add CHANGELOG.md
-
 # 5. Realizar bump automático de versión (esto calculará la nueva versión, actualizará el CHANGELOG.md y dejará cambios para commitear)
 echo "🚀 Realizando bump de versión automáticamente..."
 cog bump --auto
