@@ -12,6 +12,16 @@
 - **(cog)** Intentando hacer andar el script - (d3f5e4c) - Jx
 
 - - -
+## 0.4.0 - 2025-03-18
+#### Features
+- **(release)** script para release terminado creo yo - (0ac0b37) - Jx
+- **(release)** script para release terminado creo yo - (08d80dd) - Jx
+#### Tests
+- **(cog)** update script - (4dd9fe2) - Jx
+- Este es un commit que era no convencional y fue editado - (7e5ae64) - Jx
+
+- - -
+
 ## 0.3.0 - 2025-03-18
 #### Features
 - **(test)** test para ver feat bump - (8007ad6) - Jx
