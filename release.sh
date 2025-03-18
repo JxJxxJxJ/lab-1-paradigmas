@@ -4,8 +4,8 @@
 set -e
 
 # 1. Verificar que estoy en RAMA_DESEADA (la rama que quiero hacer release)
-BRANCH_ACTUAL  = "$(git rev-parse --abbrev-ref HEAD)"
-BRANCH_DESEADA = "main" # Por defecto main
+BRANCH_ACTUAL="$(git rev-parse --abbrev-ref HEAD)"
+BRANCH_DESEADA="main" # Por defecto main
 if [[ $BRANCH_ACTUAL != $BRANCH_DESEADA ]]; then
   echo "⚠️ Este script debe ejecutarse en la rama $BRANCH_DESEADA. Rama actual: $BRANCH_ACTUAL"
   exit 1
