@@ -43,6 +43,7 @@ git tag "v$VERSION"
 
 # 9. Subir cambios y etiquetas a GitHub
 echo "📤 Subiendo cambios y tags a GitHub..."
+git push origin v$VERSION
 git push origin main --follow-tags
 
 # 10. Crear un release en GitHub con el changelog como descripción
