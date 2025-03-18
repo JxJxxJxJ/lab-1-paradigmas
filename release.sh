@@ -3,6 +3,9 @@
 # Me detengo si cualquier comando retorna error (rc != 0)
 set -e
 
+# Opcional: Resetear cualquier cambio pendiente para asegurar un árbol limpio
+git reset --hard HEAD
+
 # 1. Verificar que estoy en RAMA_DESEADA (la rama que quiero hacer release)
 BRANCH_ACTUAL="$(git rev-parse --abbrev-ref HEAD)"
 BRANCH_DESEADA="main" # Por defecto main
@@ -12,31 +15,27 @@ if [[ $BRANCH_ACTUAL != $BRANCH_DESEADA ]]; then
 fi
 
 # 2. Veo si hay cambios en el repositorio sin commitear
-# -n "String" == True si la cadena es no-vacia
+# -n "String" == True si la cadena es no-vacía
 if [[ -n "$(git status --porcelain)" ]]; then
   echo "⚠️ Hay cambios sin confirmar en el repositorio. Haz commit o descarta los cambios antes de continuar."
   exit 1
 fi
 
 # 3. Verificar que los commits cumplen con el formato de Conventional Commits
-# Se ejecuta cog check --from-latest-tag para asegurarse de que los commits 
-# desde el último tag cumplen con las reglas de Conventional Commits.
-# Si siempre se usaron convcommits entonces es innecesario.
 echo "✅ Verificando el historial de commits..."
-if cog check --from-latest-tag; then # == 0 on success 
+if cog check --from-latest-tag; then
   echo "✔️ Historial de commits verificado con éxito."
-else # Hay commits no convencionales
+else
   echo "❌ Hay commits no convencionales."
   exit 1
 fi
 
 # 4. Realizar el bump automático de versión con Cocogitto
-#    Esto actualizará el CHANGELOG.md y creara el commit de versión + el tag.
 echo "🚀 Ejecutando bump automático..."
 cog bump --auto
 
 # 5. Obtener la nueva versión generada (ya se crearon el commit y el tag)
-VERSION=$(cog -v get-version) # Guarda la version x.y.z despues del bump 
+VERSION=$(cog -v get-version)
 echo "🔖 Version actualizada: $VERSION"
 
 # 6. Subir los cambios y tags a GitHub
