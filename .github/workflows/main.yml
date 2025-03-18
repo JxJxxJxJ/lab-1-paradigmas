@@ -3,23 +3,57 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - main   # O la rama que desees lanzar
 
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Verificar código
+      # 1. Hacer checkout completo (para disponer del historial de commits y tags)
+      - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: Instalar dependencias
+      # 2. Cachear el binario de Cocogitto para evitar reinstalaciones
+      - name: Cache Cocogitto
+        uses: actions/cache@v3
+        with:
+          path: $HOME/.cargo/bin/cog
+          key: ${{ runner.os }}-cocogitto-6.2.0
+          restore-keys: |
+            ${{ runner.os }}-cocogitto-
+
+      # 3. Instalar Cocogitto si no está instalado
+      - name: Instalar Cocogitto
         run: |
-          curl -sSL https://github.com/cocogitto/cocogitto/releases/download/v6.2.0/cocogitto-linux-amd64 -o /usr/local/bin/cog
-          chmod +x /usr/local/bin/cog
-          curl -fsSL https://cli.github.com/packages/githubcli.repo > /etc/apt/sources.list.d/githubcli.list
-          sudo apt update
-          sudo apt install gh
+          if ! command -v cog >/dev/null 2>&1; then
+            echo "Cocogitto no está instalado. Instalando..."
+            # Crear directorio para el binario si no existe
+            mkdir -p $HOME/.cargo/bin
+            # Descargar y extraer el tar.gz de Cocogitto
+            curl -L https://github.com/cocogitto/cocogitto/releases/download/6.2.0/cocogitto-6.2.0-x86_64-unknown-linux-musl.tar.gz -o cocogitto.tar.gz
+            tar -xzf cocogitto.tar.gz
+            # Se asume que el binario extraído se llama "cog"
+            chmod +x cog
+            mv cog $HOME/.cargo/bin/
+            echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          else
+            echo "Cocogitto ya está instalado."
+          fi
 
+      # 4. Verificar e instalar GitHub CLI (gh) si no está instalado
+      - name: Instalar GitHub CLI
+        run: |
+          if ! command -v gh >/dev/null 2>&1; then
+            echo "GitHub CLI no está instalado. Instalando..."
+            sudo apt-get update && sudo apt-get install -y gh
+          else
+            echo "GitHub CLI ya está instalado."
+          fi
+
+      # 5. Ejecutar el script de release
       - name: Ejecutar script de release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash ./release.sh
