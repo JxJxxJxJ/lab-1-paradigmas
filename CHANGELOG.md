@@ -12,6 +12,25 @@
 - **(cog)** Intentando hacer andar el script - (d3f5e4c) - Jx
 
 - - -
+## 0.2.0 - 2025-03-18
+#### Features
+- **(test)** test para ver feat bump - (978c64a) - Jx
+#### Miscellaneous Chores
+- **(cog)** update release.sh - (2db072a) - Jx
+- **(cog)** update script - (97718b7) - Jx
+- **(cog)** update script - (985c252) - Jx
+- **(cog)** update script - (dbfa21e) - Jx
+- **(cog)** update script - (50a7fd2) - Jx
+- **(cog)** update script - (ef87e99) - Jx
+- **(cog)** update changelog - (81c9971) - Jx
+- **(cog)** chmod +x release.sh - (fb57ddd) - Jx
+- **(cog)** Agregar script para release automaticas semver - (8b48f95) - Jx
+#### Tests
+- **(cog)** release.sh agregado - (027bfe5) - Jx
+- **(cog)** Intentando hacer andar el script - (d3f5e4c) - Jx
+
+- - -
+
 
 ## 0.1.0 - 2025-03-18
 #### Features
