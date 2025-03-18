@@ -22,7 +22,7 @@ cog check --from-latest-tag
 
 # 4. Generar el changelog desde el último tag
 echo "📜 Generando changelog..."
-cog changelog --latest > CHANGELOG.md
+cog changelog > CHANGELOG.md
 
 # 5. Incrementar versión automáticamente según los commits
 echo "🚀 Realizando bump de versión..."
