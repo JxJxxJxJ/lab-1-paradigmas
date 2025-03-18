@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main   # O la rama que desees lanzar
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Hacer checkout completo (para disponer del historial de commits y tags)
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # 2. Cachear el binario de Cocogitto para evitar reinstalaciones
+      - name: Cache Cocogitto
+        uses: actions/cache@v3
+        with:
+          path: $HOME/.cargo/bin/cog
+          key: ${{ runner.os }}-cocogitto-${{ hashFiles('release.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-cocogitto-
+
+      # 3. Instalar Cocogitto si no está instalado
+      - name: Instalar Cocogitto
+        run: |
+          if ! command -v cog >/dev/null 2>&1; then
+            echo "Cocogitto no está instalado. Instalando..."
+            curl -LsSf https://github.com/cocogitto/cocogitto/releases/latest/download/cocogitto-installer.sh | bash
+            echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          else
+            echo "Cocogitto ya está instalado."
+          fi
+
+      # 4. Verificar e instalar GitHub CLI (gh) solo si no está instalado
+      - name: Instalar GitHub CLI
+        run: |
+          if ! command -v gh >/dev/null 2>&1; then
+            echo "GitHub CLI no está instalado. Instalando..."
+            sudo apt-get update && sudo apt-get install -y gh
+          else
+            echo "GitHub CLI ya está instalado."
+          fi
+
+      # 5. Ejecutar el script de release
+      - name: Ejecutar script de release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash ./release.sh
