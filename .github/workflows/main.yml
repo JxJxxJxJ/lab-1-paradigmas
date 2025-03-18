@@ -35,7 +35,7 @@ jobs:
             echo "Cocogitto ya está instalado."
           fi
 
-      # 4. Verificar e instalar GitHub CLI (gh) solo si no está instalado
+      # 4. Verificar e instalar GitHub CLI (gh) si no está instalado
       - name: Instalar GitHub CLI
         run: |
           if ! command -v gh >/dev/null 2>&1; then
