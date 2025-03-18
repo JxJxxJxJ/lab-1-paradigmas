@@ -19,28 +19,20 @@ fi
 echo "✅ Verificando el historial de commits..."
 cog check --from-latest-tag
 
-# 5. Realizar bump automático de versión (esto calculará la nueva versión, actualizará el CHANGELOG.md y dejará cambios para commitear)
-echo "🚀 Realizando bump de versión automáticamente..."
+# 4. Realizar el bump automático de versión con Cocogitto
+#    Esto actualizará el CHANGELOG.md, creará el commit de versión y la etiqueta.
+echo "🚀 Ejecutando bump automático..."
 cog bump --auto
 
-# 6. Obtener la nueva versión
+# 5. Obtener la nueva versión generada (ya se creó el commit y el tag)
 VERSION=$(cog -v get-version)
 echo "🔖 Nueva versión detectada: $VERSION"
 
-# 7. Si hay cambios pendientes (por ejemplo, en CHANGELOG.md), se comitean usando cog commit
-if git diff --cached --quiet; then
-  echo "✅ No hay cambios pendientes para commitear."
-else
-  echo "📌 Comiteando cambios pendientes con cog commit..."
-  # Usa el tipo de commit que prefieras; aquí se usa "chore" para el commit de release
-  cog commit chore "release: versión $VERSION"
-fi
-
-# 8. Subir cambios y etiquetas a GitHub
+# 6. Subir los cambios y las etiquetas a GitHub
 echo "📤 Subiendo cambios y etiquetas a GitHub..."
 git push origin main --follow-tags
 
-# 9. Crear o actualizar un release en GitHub usando el CHANGELOG.md
+# 7. Crear o actualizar un release en GitHub utilizando el CHANGELOG.md generado
 TAG="v$VERSION"
 echo "📦 Procesando release en GitHub para el tag $TAG..."
 if gh release view "$TAG" >/dev/null 2>&1; then
