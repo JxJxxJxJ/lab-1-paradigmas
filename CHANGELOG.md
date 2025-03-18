@@ -12,6 +12,13 @@
 - **(cog)** Intentando hacer andar el script - (d3f5e4c) - Jx
 
 - - -
+## 0.3.0 - 2025-03-18
+#### Features
+- **(test)** test para ver feat bump - (8007ad6) - Jx
+- **(test)** test para ver feat bump - (f40bc30) - Jx
+
+- - -
+
 ## 0.2.0 - 2025-03-18
 #### Features
 - **(test)** test para ver feat bump - (978c64a) - Jx
